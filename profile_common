@@ -1,11 +1,10 @@
 # Check this out and add the following to your .profile
-# source $HOME/shell_env/profile_common
+# source <PATH_TO_HERE>/profile_common
 
-# Assumes this is checked out under the home dir
-#THIS_DIR=`dirname $0`
-THIS_DIR=$HOME/shell_env
+THIS_DIR=`dirname "${BASH_SOURCE[0]}"`
+COMMON_BIN=$THIS_DIR/bin
 
-export PATH=$PATH:$THIS_DIR/bin
+export PATH=$PATH:$COMMON_BIN
 export EDITOR=vi
 
 # see http://m.onkey.org/if-you-see-this

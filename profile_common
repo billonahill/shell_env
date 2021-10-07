@@ -12,7 +12,7 @@ source $COMMON_BIN/git-ps1.sh
 source $COMMON_BIN/git-completion.bash
 
 alias gitc='git checkout'
-alias gitcm='git checkout master 2> /dev/null || git checkout main'
+alias gitcm='git checkout main 2> /dev/null || git checkout master'
 alias gitcd="git checkout develop"
 alias gits="git status"
 alias gitb="git branch"

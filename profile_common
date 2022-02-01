@@ -11,6 +11,10 @@ export EDITOR=vi
 source $COMMON_BIN/git-ps1.sh
 source $COMMON_BIN/git-completion.bash
 
+# add brew and mate to path
+PATH=$PATH:/opt/homebrew/bin
+PATH=$PATH:/Applications/TextMate.app/Contents/MacOS
+
 alias gitc='git checkout'
 alias gitcm='git checkout main 2> /dev/null || git checkout master'
 alias gitcd="git checkout develop"

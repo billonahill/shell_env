@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-REPO=`git remote -v | cut -d ":" -f 2 | sed 's/\..*//g' | uniq`
+REPO=`git remote -v | cut -d ":" -f 2 | sed 's/.*\.com\///g'| sed 's/\..*//g' | uniq`
 FROM=`git branch | grep "^\*" | cut -f 2 -d ' '`
-TO=${1:-master}
+TO=${1:-`git remote show origin | sed -n '/HEAD branch/s/.*: //p'`}
 
 if [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
   echo "Usage: $0 [to_branch]"

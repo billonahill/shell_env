@@ -16,8 +16,8 @@ IMAGE_NAME=$1
 IMAGE_SHA=$2
 REGISTRY_ID=173840052742
 ECR_HOST=$REGISTRY_ID.dkr.ecr.us-east-1.amazonaws.com
-IMAGE_PATH=$ECR_HOST/$IMAGE_NAME:$IMAGE_SHA
-REPO_HOME=$HOME/src
+ECR_PATH=`echo $IMAGE_NAME | sed "s/-//g"`
+IMAGE_PATH=$ECR_HOST/$ECR_PATH:$IMAGE_SHA
 
 if [ -n "$AS_ROOT" ]; then
   ROOT_ARG="-u 0"
@@ -31,11 +31,11 @@ if [ -z "$IMAGE_SHA" ]; then
   IMAGE_ID=$IMAGE_NAME
 else
   # auth requires https://github.com/lyft/awsaccess
-  if [ ! -f "$REPO_HOME/awsaccess/oktaawsaccess.sh" ]; then
-      echo 'ERROR: This script requires https://github.com/lyft/awsaccess cloned out at $HOME/git'
+  if [ ! -f "$HOME/src/awsaccess/oktaawsaccess.sh" ]; then
+      echo 'ERROR: This script requires https://github.com/lyft/awsaccess cloned out at $HOME/src'
       exit 1
   fi
-  source $REPO_HOME/awsaccess/oktaawsaccess.sh
+  source $HOME/src/awsaccess/oktaawsaccess.sh
   oktaawsaccess clear && oktaawsaccess zimride-developer
 
   AWS_VERSION=`aws --version | sed 's:aws-cli/::'`

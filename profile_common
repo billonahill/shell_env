@@ -16,7 +16,7 @@ PATH=$PATH:/opt/homebrew/bin
 PATH=$PATH:/Applications/TextMate.app/Contents/MacOS
 
 alias gitc='git checkout'
-alias gitcm='git checkout main 2> /dev/null || git checkout master'
+alias gitcm='if [ `git rev-parse --verify main  2> /dev/null` ]; then git checkout main; else git checkout master; fi'
 alias gitcd="git checkout develop"
 alias gits="git status"
 alias gitb="git branch"

@@ -14,8 +14,8 @@ fi
 set -x
 IMAGE_NAME=$1
 IMAGE_SHA=$2
-REGISTRY_ID=173840052742
-ECR_HOST=$REGISTRY_ID.dkr.ecr.us-east-1.amazonaws.com
+REGISTRY_ID=742048634849
+ECR_HOST=$REGISTRY_ID.dkr.ecr.us-east-2.amazonaws.com
 ECR_PATH=`echo $IMAGE_NAME | sed "s/-//g"`
 IMAGE_PATH=$ECR_HOST/$ECR_PATH:$IMAGE_SHA
 
@@ -31,12 +31,12 @@ if [ -z "$IMAGE_SHA" ]; then
   IMAGE_ID=$IMAGE_NAME
 else
   # auth requires https://github.com/lyft/awsaccess
-  if [ ! -f "$HOME/src/awsaccess/oktaawsaccess.sh" ]; then
-      echo 'ERROR: This script requires https://github.com/lyft/awsaccess cloned out at $HOME/src'
-      exit 1
-  fi
-  source $HOME/src/awsaccess/oktaawsaccess.sh
-  oktaawsaccess clear && oktaawsaccess zimride-developer
+  # if [ ! -f "$HOME/src/awsaccess/oktaawsaccess.sh" ]; then
+  #     echo 'ERROR: This script requires https://github.com/lyft/awsaccess cloned out at $HOME/src'
+  #     exit 1
+  # fi
+  # source $HOME/src/awsaccess/oktaawsaccess.sh
+  # oktaawsaccess clear && oktaawsaccess zimride-developer
 
   AWS_VERSION=`aws --version | sed 's:aws-cli/::'`
   if [[ $AWS_VERSION == 1* ]]; then
@@ -55,4 +55,4 @@ else
   IMAGE_ID=`docker images --format "{{.ID}}\t{{.Repository}}:{{.Tag}}" | grep $IMAGE_PATH | cut -f 1`
 fi
 
-docker container run -it $ROOT_ARG $DEBUG_ARG --entrypoint /bin/bash $IMAGE_ID
+docker container run -it $ROOT_ARG $DEBUG_ARG --entrypoint /bin/sh $IMAGE_ID

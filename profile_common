@@ -4,14 +4,25 @@
 # Check this out and add the following to your .profile
 # source <PATH_TO_HERE>/profile_common
 
+#. "$HOME/.cargo/env"
+
+GO_HOME=`ls -d $HOME/.asdf/installs/golang/*/go`
+
+# the bash in /usr/local/bin is not arm64, see
+# https://github.com/orgs/Homebrew/discussions/2486#discussioncomment-1662525 
+# add brew to path before local bin to get arm64 not x86_64
+export PATH=/bin:/opt/homebrew/bin:/usr/bin:/usr/local/bin
+export PATH=/opt/homebrew/opt/python@3.11/libexec/bin:$PATH
+export PATH=$GO_HOME/bin:$PATH
+export PATH=$PATH:$PATH:$HOME/bin:$COMMON_BIN
+# for cursor aegnt
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=vi
+export AIRFLOW_HOME=$HOME/src/airflow_dags
+
 THIS_DIR=`dirname "${BASH_SOURCE[0]}"`
 COMMON_BIN=$THIS_DIR/bin
 
-GO_HOME=`ls -d $HOME/.asdf/installs/golang/*/go`
-export PATH=`ls -d $HOME/.asdf/installs/rust/*/bin`:$GO_HOME/bin:$PATH
-export PATH=$PATH:/opt/homebrew/bin:$PATH:$HOME/bin:$COMMON_BIN
-export EDITOR=vi
-export AIRFLOW_HOME=$HOME/src/airflow_dags
 
 # see http://m.onkey.org/if-you-see-this
 source $COMMON_BIN/git-ps1.sh
@@ -20,14 +31,18 @@ source $COMMON_BIN/git-completion.bash
 GOPATH=$GO_HOME/bin/go
 PATH=$PATH:$HOME/src/shell_env/bin
 
-# add brew and mate to path
-PATH=$PATH:/opt/homebrew/bin
 PATH=$PATH:/Applications/TextMate.app/Contents/MacOS
 PATH=$PATH:$HOME/Library/Python/3.9/bin
 
 PATH=$PATH:$HOME/.cargo/bin
 #PATH=$PATH:$(go env GOPATH)/bin
 PATH=$PATH:/Applications/SnowSQL.app/Contents/MacOS
+
+for bcfile in /usr/local/etc/bash_completion.d/*; do
+    [ -f "$bcfile" ] && [[ "$bcfile" != "/usr/local/etc/bash_completion.d/ctest" ]] && . "$bcfile"
+done
+
+# terraform -install-autocomplete
 
 # alias go="go1.21.5"
 alias gitc='git checkout'

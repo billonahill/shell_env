@@ -1,7 +1,8 @@
 #!/bin/bash
+set -xe
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <pod_namee> [-n <namespace>]"
+  echo "Usage: $0 <pod_name> [-n <namespace>]"
   echo "Opens a shell on a running k8s pod"
   exit -1
 fi
